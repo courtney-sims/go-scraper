@@ -3,6 +3,11 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println("Hello, pets.")
-	makeRequest()
+	fmt.Println("Hello, web.")
+	links, err := makeRequest("https://80000hours.org")
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	sortLinks(links)
 }
