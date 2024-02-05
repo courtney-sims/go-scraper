@@ -9,5 +9,7 @@ func main() {
 		fmt.Println(err)
 	}
 
-	sortLinks(links)
+	countedDomains := countDomains(links)
+
+	fmt.Println(countedDomains)
 }

@@ -12,3 +12,5 @@ This is the first project in my Year of Go. Comments hold tidbits I learn as I c
 
 - https://pkg.go.dev/github.com/gocolly/colly/v2#Collector.Request
 - https://go-colly.org/docs/examples/coursera_courses/
+- https://haydz.github.io/2020/04/12/ParsingStrings.html
+- https://golang.cafe/blog/how-to-check-if-a-map-contains-a-key-in-go

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/gocolly/colly"
@@ -51,7 +52,41 @@ func makeRequest(url string) ([]string, error) {
 	return links, err
 }
 
-func sortLinks(links []string) {
+func countDomains(links []string) map[string]int {
 	// Go learning: The len function returns the number of elements in a slice
 	fmt.Println("Number of links found:", len(links))
+	uniqueDomains := 0
+	countedDomains := make(map[string]int)
+
+	// Cut out the url of the site we're scraping
+	// This won't help with relative paths though. We either need to also check for starts with or return absolute paths to the slice
+	for _, link := range links {
+		// separate by slashes in domain
+		separation := strings.Split(link, "/")
+		protocol := separation[0]
+
+		// if 0th element is not http or https, it's a relative path to the site, so we'll ignore that
+		if protocol != "http:" && protocol != "https:" {
+			continue
+		}
+
+		// pull domain only once we've found a full link
+		domain := separation[2]
+		if domain == "80000hours.org" {
+			continue
+		}
+		uniqueDomains++
+		fmt.Println(domain)
+
+		// if we've already seen this domain, increment the count
+		// otherwise, add it to the map
+		count, ok := countedDomains[domain]
+		if ok {
+			countedDomains[domain] = count + 1
+		} else {
+			countedDomains[domain] = 1
+		}
+	}
+	fmt.Println("Number of unique domains found:", len(countedDomains))
+	return countedDomains
 }
