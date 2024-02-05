@@ -1,2 +1,3 @@
 # go-scraper
-A terminal application for scraping web pages
+
+A terminal application for scraping web pages about shelter pets.
