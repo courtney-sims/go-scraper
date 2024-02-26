@@ -17,7 +17,7 @@ func makeRequest(url string) ([]string, error) {
 
 	// Be nice to the sites we crawl
 	c.Limit(&colly.LimitRule{
-		// Filter domains affected by tis rule
+		// Filter domains affected by this rule
 		//DomainGlob: "80000hours.org/*",
 		// Set a delay between requests to these domains
 		Delay: 1 * time.Second,
@@ -59,7 +59,6 @@ func countDomains(links []string) map[string]int {
 	countedDomains := make(map[string]int)
 
 	// Cut out the url of the site we're scraping
-	// This won't help with relative paths though. We either need to also check for starts with or return absolute paths to the slice
 	for _, link := range links {
 		// separate by slashes in domain
 		separation := strings.Split(link, "/")
@@ -72,9 +71,12 @@ func countDomains(links []string) map[string]int {
 
 		// pull domain only once we've found a full link
 		domain := separation[2]
-		if domain == "80000hours.org" {
+
+		// ignore the domain of the site we're scraping
+		if strings.Contains(separation[2], "80000hours.org") {
 			continue
 		}
+
 		uniqueDomains++
 		fmt.Println(domain)
 
